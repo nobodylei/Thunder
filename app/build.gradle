@@ -1,0 +1,56 @@
+apply plugin: 'com.android.application'
+
+android {
+    /*signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword '123456'
+            storeFile file('E:/避难指南/thunder.jks')
+            storePassword '123456'
+        }
+    }*/
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.rjwl.reginet.thunder"
+        minSdkVersion 16
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        ndk {
+            //选择要添加的对应 cpu 类型的.so 库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'armeabi-v8a'
+            // 还可以添加 'x86', 'x86_64', 'mips', 'mips64'
+        }
+
+        manifestPlaceholders = [
+                JSHARE_PKGNAME: applicationId,
+                JPUSH_APPKEY  : "0e028d97477f993eb7fc83ed", //极光控制台创建应用得到的 AppKey.
+                JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+                TENCENT_APPID : "",//腾讯开放平台注册应用得到的 appId
+
+        ]
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    compile 'me.kaelaela:verticalviewpager:1.0.0@aar'
+    compile 'cn.jiguang.sdk:jshare:1.5.0'
+    // 此处以 JShare 1.5.0 版本为例，具体版本请参考压缩包 libs 的 jar 包版本。
+    // 此处以 jshare-qqmodel 1.5.0  版本为例，具体版本请参考压缩包 libs 的 jar 包版本。
+    compile 'cn.jiguang.sdk:jshare-wechatmodel:1.5.0'
+    compile 'cn.jiguang.sdk:jcore:1.2.1'  // 此处以 JCore 1.1.7 版本为例，具体版本请参考压缩包 libs 的 jar 包版本。
+}
